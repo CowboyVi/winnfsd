@@ -1,5 +1,6 @@
 #include "FileTable.h"
 #include "FileTree.h"
+#include <filesystem>
 #include <string.h>
 #include <io.h>
 #include <stdio.h>
@@ -347,13 +348,7 @@ void CFileTable::RenameFile(const char *pathFrom, const char* pathTo)
 
 bool FileExists(const char *path)
 {
-    int handle;
-    struct _finddata_t fileinfo;
-
-    handle = _findfirst(path, &fileinfo);
-    _findclose(handle);
-
-    return handle == -1 ? false : strcmp(fileinfo.name, strrchr(path, '\\') + 1) == 0;  //filename must match case
+    return std::filesystem::exists(std::string(path));
 }
 
 unsigned long GetFileID(const char *path)

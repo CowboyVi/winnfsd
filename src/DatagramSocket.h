@@ -4,6 +4,7 @@
 #include "SocketListener.h"
 #include "Socket.h"
 #include <winsock.h>
+#pragma comment(lib, "wsock32.lib")
 
 class CDatagramSocket
 {
@@ -14,7 +15,6 @@ class CDatagramSocket
     bool Open(int nPort);
     void Close(void);
     int GetPort(void);
-    void Run(void);
 
     private:
     int m_nPort;

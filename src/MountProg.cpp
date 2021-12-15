@@ -45,7 +45,7 @@ CMountProg::~CMountProg()
     if (m_pPathFile) {
         free(m_pPathFile);
         m_pPathFile = NULL;
-    }	
+    }
 
     for (i = 0; i < MOUNT_NUM_MAX; i++) {
         delete[] m_pClientAddr[i];
@@ -85,7 +85,7 @@ void CMountProg::Export(const char *path, const char *pathAlias)
 	if (path != NULL && pathAlias != NULL) {
 		if (m_PathMap.count(pathAlias) == 0) {
 			m_PathMap[pathAlias] = formattedPath;
-			printf("Path #%i is: %s, path alias is: %s\n", m_PathMap.size(), path, pathAlias);
+			printf("Path #%zi is: %s, path alias is: %s\n", m_PathMap.size(), path, pathAlias);
 		} else {
 			printf("Path %s with path alias %s already known\n", path, pathAlias);
 		}
@@ -227,13 +227,13 @@ void CMountProg::ProcedureEXPORT(void)
 		int fillBytes = (length % 4);
 		if (fillBytes > 0) {
 			fillBytes = 4 - fillBytes;
-			m_pOutStream->Write(".", fillBytes);
+			m_pOutStream->Write((void*)".", fillBytes);
 		}
 		// groups
 		m_pOutStream->Write(1);
 		m_pOutStream->Write(1);
-		m_pOutStream->Write("*", 1);
-		m_pOutStream->Write("...", 3);
+		m_pOutStream->Write((void*)"*", 1);
+		m_pOutStream->Write((void*)"...", 3);
 		m_pOutStream->Write(0);
 	}
 
@@ -381,7 +381,7 @@ bool CMountProg::ReadPathsFromFile(const char* sFileName)
 
 			char *pCurPath = (char*)malloc(paths[0].size() + 1);
 			pCurPath = (char*)paths[0].c_str();
-			
+
 			if (pCurPath != NULL) {
 				char *pCurPathAlias = (char*)malloc(paths[1].size() + 1);
 				pCurPathAlias = (char*)paths[1].c_str();

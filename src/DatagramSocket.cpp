@@ -1,4 +1,5 @@
 #include "DatagramSocket.h"
+#include <string>
 
 CDatagramSocket::CDatagramSocket()
 {
@@ -42,7 +43,8 @@ bool CDatagramSocket::Open(int nPort)
     localAddr.sin_port = htons(m_nPort);
 	localAddr.sin_addr.s_addr = inet_addr(g_sInAddr);
 	if (localAddr.sin_addr.s_addr == INADDR_NONE) {
-		g_sInAddr = "0.0.0.0";
+        std::string g_sInAddr_str("0.0.0.0");
+        g_sInAddr = g_sInAddr_str.data();
 		localAddr.sin_addr.s_addr = INADDR_ANY;
 	}
 

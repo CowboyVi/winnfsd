@@ -59,13 +59,14 @@ static void printLine(void)
 static void printAbout(void)
 {
     printLine();
-    printf("WinNFSd {{VERSION}} [{{HASH}}]\n");
+    printf("WinNFSd 2.4.1\n");
     printf("Network File System server for Windows\n");
     printf("Copyright (C) 2005 Ming-Yang Kao\n");
     printf("Edited in 2011 by ZeWaren\n");
     printf("Edited in 2013 by Alexander Schneider (Jankowfsky AG)\n");
 	printf("Edited in 2014 2015 by Yann Schepens\n");
 	printf("Edited in 2016 by Peter Philipp (Cando Image GmbH), Marc Harding\n");
+    printf("Edited in 2021 by CowboyVi (Free Time)\n");
     printLine();
 }
 
@@ -255,7 +256,9 @@ int main(int argc, char *argv[])
     g_nUID = g_nGID = 0;
     g_bLogOn = true;
     g_sFileName = NULL;
-	g_sInAddr = "0.0.0.0";
+
+    std::string g_sInAddr_str("0.0.0.0");
+	g_sInAddr = g_sInAddr_str.data();
 
     for (int i = 1; i < argc; i++) {//parse parameters
         if (_stricmp(argv[i], "-id") == 0) {
@@ -280,7 +283,7 @@ int main(int argc, char *argv[])
 
             char *pCurPathAlias = argv[argc - 1]; //path alias is the last parameter
 
-            if (pPath != NULL || pCurPathAlias != NULL) {
+            if (pPath != NULL && pCurPathAlias != NULL) {
                 std::vector<std::string> pCurPaths;
                 pCurPaths.push_back(std::string(pPath));
                 pCurPaths.push_back(std::string(pCurPathAlias));
